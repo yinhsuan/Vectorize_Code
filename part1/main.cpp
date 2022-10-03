@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
   clampedExpSerial(values, exponents, gold, N);
   clampedExpVector(values, exponents, output, N);
 
-  //absSerial(values, gold, N);
-  //absVector(values, output, N);
+  absSerial(values, gold, N);
+  absVector(values, output, N);
 
   printf("\e[1;31mCLAMPED EXPONENT\e[0m (required) \n");
   bool clampedCorrect = verifyResult(values, exponents, output, gold, N);

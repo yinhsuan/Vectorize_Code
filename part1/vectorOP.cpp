@@ -11,6 +11,7 @@ void absVector(float *values, float *output, int N)
   //  Note: Take a careful look at this loop indexing.  This example
   //  code is not guaranteed to work when (N % VECTOR_WIDTH) != 0.
   //  Why is that the case?
+  //  Because "_pp_vload", "_pp_vlt", "_pp_vsub" process #VECTOR_WIDTH data at a time in the template
   for (int i = 0; i < N; i += VECTOR_WIDTH)
   {
 
