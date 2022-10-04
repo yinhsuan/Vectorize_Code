@@ -53,12 +53,8 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
   // N and VECTOR_WIDTH, not just when VECTOR_WIDTH divides N
   //
 
-  __pp_vec_float val;
-  __pp_vec_int exp;
-
-  __pp_vec_float result = _pp_vset_float(1.f);
-  __pp_vec_float valTmp = _pp_vset_float(0.f);
-  __pp_vec_int expTmp = _pp_vset_int(1); // set to 1 but 0
+  __pp_vec_float val, valTmp, result;
+  __pp_vec_int exp, expTmp;
   
   __pp_vec_int zero = _pp_vset_int(0);
   __pp_vec_int one = _pp_vset_int(1);
