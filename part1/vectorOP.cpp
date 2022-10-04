@@ -56,13 +56,13 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
   __pp_vec_float val, result;
   __pp_vec_int exp;
 
+  __pp_vec_float valTmp = _pp_vset_float(0.f);
+  __pp_vec_int expTmp = _pp_vset_int(1); // set to 1 but 0
+
   __pp_vec_int zero = _pp_vset_int(0);
   __pp_vec_int one = _pp_vset_int(1);
   __pp_vec_float onef = _pp_vset_float(1.f);
   __pp_vec_float clampf = _pp_vset_float(9.999999f);
-
-  __pp_vec_float valTmp = _pp_vset_float(0.f);
-  __pp_vec_int expTmp = _pp_vset_int(1); // set to 1 but 0
 
   __pp_mask maskAll, isToMul, notToMul, isToClamp;
 
@@ -73,6 +73,7 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
     notToMul = _pp_init_ones(0);
     isToClamp = _pp_init_ones(0);
 
+    // handle (N % verifyResult) != 0
     if (i + VECTOR_WIDTH > N) {
       for (int j=0; j<(N%VECTOR_WIDTH); j++) {
         valTmp.value[j] = values[i+j];
