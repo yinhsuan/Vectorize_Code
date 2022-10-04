@@ -53,12 +53,13 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
   // N and VECTOR_WIDTH, not just when VECTOR_WIDTH divides N
   //
 
-  __pp_vec_float val, result;
+  __pp_vec_float val;
   __pp_vec_int exp;
 
+  __pp_vec_float result = _pp_vset_float(1.f);
   __pp_vec_float valTmp = _pp_vset_float(0.f);
   __pp_vec_int expTmp = _pp_vset_int(1); // set to 1 but 0
-
+  
   __pp_vec_int zero = _pp_vset_int(0);
   __pp_vec_int one = _pp_vset_int(1);
   __pp_vec_float onef = _pp_vset_float(1.f);
@@ -72,6 +73,9 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
     isToMul = _pp_init_ones(0); // all zeros
     notToMul = _pp_init_ones(0);
     isToClamp = _pp_init_ones(0);
+    result = _pp_vset_float(1.f);
+    valTmp = _pp_vset_float(0.f);
+    expTmp = _pp_vset_int(1); // set to 1 but 0
 
     // handle (N % verifyResult) != 0
     if (i + VECTOR_WIDTH > N) {
@@ -91,10 +95,6 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
     _pp_vstore_float(output + i, onef, notToMul); // output[i] = 1.f; }
 
     _pp_vgt_int(isToMul, exp, zero, maskAll); // else { => exp[i] > 0
-    _pp_vmove_float(result, val, isToMul); // float result = x;
-    _pp_vsub_int(exp, exp, one, isToMul); // int count = y - 1;
-    _pp_vgt_int(isToMul, exp, zero, isToMul); // update isToMul
-
     while (_pp_cntbits(isToMul) > 0) { // while (count > 0) {
       _pp_vmult_float(result, result, val, isToMul); // result *= x;
       _pp_vsub_int(exp, exp, one, maskAll); // count--; }
