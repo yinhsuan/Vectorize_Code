@@ -93,16 +93,16 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
     _pp_vgt_int(isToMul, exp, zero, maskAll); // else { => exp[i] > 0
     _pp_vmove_float(result, val, isToMul); // float result = x;
     _pp_vsub_int(exp, exp, one, isToMul); // int count = y - 1;
+    _pp_vgt_int(isToMul, exp, zero, isToMul); // update isToMul
 
     while (_pp_cntbits(isToMul) > 0) { // while (count > 0) {
       _pp_vmult_float(result, result, val, isToMul); // result *= x;
       _pp_vsub_int(exp, exp, one, maskAll); // count--; }
       _pp_vgt_int(isToMul, exp, zero, maskAll); // update isToMul
     }
-
-    _pp_vgt_float(isToClamp, result, clampf, maskAll); // if (result > 9.999999f) {
-    _pp_vmove_float(result, clampf, isToClamp); // result = 9.999999f; }
     isToMul = _pp_mask_not(notToMul);
+    _pp_vgt_float(isToClamp, result, clampf, isToMul); // if (result > 9.999999f) {
+    _pp_vmove_float(result, clampf, isToClamp); // result = 9.999999f; }
     _pp_vstore_float(output + i, result, isToMul); // output[i] = result; }
   }
 }
