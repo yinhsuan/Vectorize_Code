@@ -12,7 +12,8 @@ void absVector(float *values, float *output, int N)
   //  code is not guaranteed to work when (N % VECTOR_WIDTH) != 0.
   //  Why is that the case?
   //  Because "_pp_vload", "_pp_vlt", "_pp_vsub" process #VECTOR_WIDTH data at a time in the template
-  //  And the code did not check whether (N % VECTOR_WIDTH) != 0 before assign maskAll with _pp_init_ones()
+  //  And the code did not check whether (N % verifyResult) != 0 before assign maskAll with _pp_init_ones()
+  //  And in verifyResult(), it will compare the number until verifyResult no matter what N is given ()
   for (int i = 0; i < N; i += VECTOR_WIDTH)
   {
 
@@ -60,6 +61,9 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
   __pp_vec_float onef = _pp_vset_float(1.f);
   __pp_vec_float clampf = _pp_vset_float(9.999999f);
 
+  __pp_vec_float valTmp = _pp_vset_float(0.f);
+  __pp_vec_int expTmp = _pp_vset_int(1); // set to 1 but 0
+
   __pp_mask maskAll, isToMul, notToMul, isToClamp;
 
   for (int i = 0; i < N; i += VECTOR_WIDTH)
@@ -69,8 +73,18 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
     notToMul = _pp_init_ones(0);
     isToClamp = _pp_init_ones(0);
 
-    _pp_vload_float(val, values + i, maskAll); // float x = values[i];
-    _pp_vload_int(exp, exponents + i, maskAll); // int y = exponents[i];
+    if (i + VECTOR_WIDTH > N) {
+      for (int j=0; j<(N%VECTOR_WIDTH); j++) {
+        valTmp.value[j] = values[i+j];
+        expTmp.value[j] = exponents[i+j];
+      }
+      _pp_vmove_float(val, valTmp, maskAll); // float x = values[i];
+      _pp_vmove_int(exp, expTmp, maskAll); // int y = exponents[i];
+    }
+    else {
+      _pp_vload_float(val, values + i, maskAll); // float x = values[i];
+      _pp_vload_int(exp, exponents + i, maskAll); // int y = exponents[i];
+    }
 
     _pp_veq_int(notToMul, exp, zero, maskAll); // if (y == 0) {
     _pp_vstore_float(output + i, onef, notToMul); // output[i] = 1.f; }
