@@ -53,13 +53,13 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
   // N and VECTOR_WIDTH, not just when VECTOR_WIDTH divides N
   //
 
-  __pp_vec_float val, valTmp, result;
-  __pp_vec_int exp, expTmp;
+  __pp_vec_float val, result;
+  __pp_vec_int exp;
   __pp_vec_int zero = _pp_vset_int(0);
   __pp_vec_int one = _pp_vset_int(1);
   __pp_vec_float onef = _pp_vset_float(1.f);
   __pp_vec_float clampf = _pp_vset_float(9.999999f);
-  __pp_mask maskAll, isToMul, notToMul, isToClamp;
+  __pp_mask maskAll, isToMul, notToMul, isToClamp, initVal;
 
   for (int i = 0; i < N; i += VECTOR_WIDTH)
   {
@@ -67,18 +67,15 @@ void clampedExpVector(float *values, int *exponents, float *output, int N)
     isToMul = _pp_init_ones(0); // all zeros
     notToMul = _pp_init_ones(0);
     isToClamp = _pp_init_ones(0);
+    initVal = _pp_init_ones(N%VECTOR_WIDTH);
     result = _pp_vset_float(1.f);
-    valTmp = _pp_vset_float(0.f);
-    expTmp = _pp_vset_int(1); // set to 1 but 0
+    val = _pp_vset_float(0.f);
+    exp = _pp_vset_int(1); // set to 1 but 0
 
     // handle (N % verifyResult) != 0
     if (i + VECTOR_WIDTH > N) {
-      for (int j=0; j<(N%VECTOR_WIDTH); j++) {
-        valTmp.value[j] = values[i+j];
-        expTmp.value[j] = exponents[i+j];
-      }
-      _pp_vmove_float(val, valTmp, maskAll); // float x = values[i];
-      _pp_vmove_int(exp, expTmp, maskAll); // int y = exponents[i];
+      _pp_vload_float(val, values + i, initVal); // float x = values[i];
+      _pp_vload_int(exp, exponents + i, initVal); // int y = exponents[i];
     }
     else {
       _pp_vload_float(val, values + i, maskAll); // float x = values[i];
