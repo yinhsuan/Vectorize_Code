@@ -138,7 +138,7 @@ void initValue(float *values, int *exponents, float *output, float *gold, unsign
   for (unsigned int i = 0; i < N + VECTOR_WIDTH; i++)
   {
     // random input values
-    srand(10); 
+    // srand(7777); 
     values[i] = -1.f + 4.f * static_cast<float>(rand()) / RAND_MAX;
     exponents[i] = rand() % EXP_MAX;
     output[i] = 0.f;
