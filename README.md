@@ -116,7 +116,7 @@ Total Vector Lanes:        481488
 ClampedExp Passed!!!
 ```
 ```diff
-A1-1: The vector utilization decreases as `VECTOR_WIDTH` increases.
++ A1-1: The vector utilization decreases as `VECTOR_WIDTH` increases.
 ```
 
 ---
