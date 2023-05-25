@@ -117,7 +117,7 @@ ClampedExp Passed!!!
 ```
 ```diff
 A1-1: The vector utilization decreases as `VECTOR_WIDTH` increases.
-
+```
 
 ---
 ### Q1 Bonus: Implement a vectorized version of arraySumSerial in arraySumVector
