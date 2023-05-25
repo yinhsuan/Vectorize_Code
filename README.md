@@ -41,9 +41,9 @@ $ cd part2
 
 #### $$\text{{vector utilization}} = \frac{{\text{{utilized lane}}}}{{\text{{total lane}}}} \quad (1)$$
 
-#### $$\text{{utilized lane}} = \# \text{{ of instruction}} \times \# \text{{ of 1 in mask}} \quad (2)$$
+#### $$\text{{utilized lane}} = \sharp \text{{ of instruction}} \times \sharp \text{{ of 1 in mask}} \quad (2)$$
 
-#### $$\text{{total lane}} = \# \text{{ of instruction}} \times \text{{vector width}} \quad (3)$$
+#### $$\text{{total lane}} = \sharp \text{{ of instruction}} \times \text{{vector width}} \quad (3)$$
 
 #### 1. From the Equation (3):
 
