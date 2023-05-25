@@ -116,8 +116,10 @@ Total Vector Lanes:        481488
 ClampedExp Passed!!!
 ```
 
-```diff
-- A1-1: The vector utilization decreases as `VECTOR_WIDTH` increases.
+```html
+<div style="background-color: #f0f8ff; padding: 10px;">
+    <p>Your text here</p>
+</div>
 ```
 
 ---
