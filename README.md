@@ -116,7 +116,9 @@ Total Vector Lanes:        481488
 ClampedExp Passed!!!
 ```
 
-+ <span style="background-color: #f0f8ff; padding: 10px;">A1-1: The vector utilization decreases as VECTOR_WIDTH increases.</span>
+```diff
+A1-1: The vector utilization decreases as VECTOR_WIDTH increases.
+```
 
 ---
 ### Q1 Bonus: Implement a vectorized version of arraySumSerial in arraySumVector
