@@ -206,9 +206,9 @@ Running test1()...
 Elapsed execution time of the loop in test1():
 2.89274sec (N: 1024, I: 20000000)
 ```
-:::info
-#### A2-2: The speedup the vectorized code achieves is 4.01 times faster than the unvectorized code.
-:::
+```diff
++ A2-2: The speedup the vectorized code achieves is 4.01 times faster than the unvectorized code.
+```
 
 ---
 ### What can you infer about the bit width of the default vector registers on the PP machines? 
@@ -240,9 +240,9 @@ Elapsed execution time of the loop in test1():
 	cmpq	$1024, %rcx                     # imm = 0x400
 	jne	.LBB0_3
 ```
-:::info
-#### A: The bit width of the default vector registers on the PP machines is 128 (bits).
-:::
+```diff
++ A: The bit width of the default vector registers on the PP machines is 128 (bits).
+```
 
 ---
 ### Q2-3: Provide a theory for why the compiler is generating dramatically different assembly.
@@ -303,6 +303,6 @@ else c[j] = a[j];
 	cmpq	$1024, %rcx                     # imm = 0x400
 	jne	.LBB0_3
 ```
-:::info
-#### A2-3: We can get better performance if the vectorized assembly code use `movaps` and `maxps`, instead of `ucomiss` and `jbe`.
-:::
+```diff
++ A2-3: We can get better performance if the vectorized assembly code use `movaps` and `maxps`, instead of `ucomiss` and `jbe`.
+```
