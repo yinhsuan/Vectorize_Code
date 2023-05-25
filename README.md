@@ -39,11 +39,11 @@ $ cd part2
 ### <font color="green">Discuss the vector utilization in two aspect:</font>
 #### In `logger.cpp`, we can get the equations:
 
-#### $$vector \space utilization = {utilized \space lane \over total \space lane} \space \space \space \space (1)$$
+#### $$\text{{vector utilization}} = \frac{{\text{{utilized lane}}}}{{\text{{total lane}}}} \quad (1)$$
 
-#### $$utilized \space lane = \# \space of  \text{ } instruction * \# \space of \space 1 \space in \space mask \space \space \space \space (2)$$
+#### $$\text{{utilized lane}} = \# \text{{ of instruction}} \times \# \text{{ of 1 in mask}} \quad (2)$$
 
-#### $$total \space lane = \# \space of  \space instruction * vector \space width \space \space \space \space (3)$$
+#### $$\text{{total lane}} = \# \text{{ of instruction}} \times \text{{vector width}} \quad (3)$$
 
 #### 1. From the Equation (3):
 
